@@ -14,8 +14,8 @@ The russian version of the task can be found in the repository.
    3.1. [Part 1](#part-1-implementation-of-the-maze-project) \
    3.2. [Part 2](#part-2-generation-of-a-perfect-maze) \
    3.3. [Part 3](#part-3-solving-the-maze) \
-   3.4. [Part 4](#part-4-ml-reinforcement-learning) \
-   3.5. [Part 5](#part-5-bonus-cave-generation) \
+   3.4. [Part 4](#part-4-bonus-cave-generation) \
+   3.5. [Part 5](#part-5-bonus-ml-reinforcement-learning) \
    3.6. [Part 6](#part-6-bonus-web-interface)
 
 
@@ -173,22 +173,7 @@ Add the ability to show the solution to _any_ maze currently shown on the screen
 - The color of the solution line must be different from the color of the walls, and the field
 - Prepare full coverage of the maze solving module with unit-tests
 
-## Part 4. ML. Reinforcement learning
-
-With the help of reinforcement learning, it is necessary to develop an algorithm for teaching an agent the shortest passage of mazes:
-- The user specifies a file which describes the maze and an ending point
-- The agent must be able to find a way out of the maze from any starting point
-- It is necessary to use the Q-learning method
-- The agent is trained on a single maze, which does not change either during the training process or during the testing phase; the endpoint is also fixed
-- The agent's training module must be fully covered by unit tests
-
-It is required to provide the user with the opportunity to interact with a trained agent:
-- The user defines the starting point
-- The route built by the agent from a given point is displayed in accordance with the rules described above
-
-Agent training and interaction modules should be developed in Python language without using ready-made reinforcement learning libraries.
-
-## Part 5. Bonus. Cave Generation
+## Part 4. Bonus. Cave Generation
 
 Add cave generation [using a cellular automaton](#generation-using-a-cellular-automaton):
 - The user selects the file that describes the cave according to the format described [above](#caves-description)
@@ -203,6 +188,21 @@ Add cave generation [using a cellular automaton](#generation-using-a-cellular-au
     - Pressing the automatic work button starts rendering iterations of the algorithm with a frequency of 1 step in `N` milliseconds, where the number of milliseconds `N` is set through a special field in the user interface
 - The size of cells in pixels is calculated so that the cave occupies the entire field allotted to it
 - Prepare full coverage of the cave generation module with unit-tests
+
+## Part 5. Bonus. ML. Reinforcement learning
+
+With the help of reinforcement learning, it is necessary to develop an algorithm for teaching an agent the shortest passage of mazes:
+- The user specifies a file which describes the maze and an ending point
+- The agent must be able to find a way out of the maze from any starting point
+- It is necessary to use the Q-learning method
+- The agent is trained on a single maze, which does not change either during the training process or during the testing phase; the endpoint is also fixed
+- The agent's training module must be fully covered by unit tests
+
+It is required to provide the user with the opportunity to interact with a trained agent:
+- The user defines the starting point
+- The route built by the agent from a given point is displayed in accordance with the rules described above
+
+Agent training and interaction modules should be developed in Python language without using ready-made reinforcement learning libraries.
 
 ## Part 6. Bonus. Web-interface
 
