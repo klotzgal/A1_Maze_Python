@@ -1,4 +1,4 @@
-from main import Maze
+from maze import Maze
 
 
 class Loader:
