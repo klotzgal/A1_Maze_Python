@@ -7,12 +7,14 @@ class Cell:
         self.y: int = y
         self.walls: dict[str, bool] = {'top': False, 'left': False,
                                        'right': False, 'bottom': False}
-        self.visited: bool = False
 
     def __eq__(self, value: object) -> bool:
         if isinstance(value, Cell):
             return self.x == value.x and self.y == value.y
         return False
+
+    def __repr__(self) -> str:
+        return f'({str(self.x)}, {str(self.y)})'
 
 
 class Maze:
