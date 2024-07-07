@@ -51,9 +51,8 @@ Mkfile.old
 dkms.conf
 
 # My
-.venv
 *venv
-__pycache__
 .vscode
+*cache*
 build
 dist
