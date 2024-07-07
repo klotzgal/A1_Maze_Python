@@ -30,7 +30,7 @@ dist:
 	tar -czf dist.tar.gz dist
 
 format:
-	$(PYEXEC) ruff format . --config "format.quote-style = 'single'"
+	$(PYEXEC) ruff format .
 	$(PYEXEC) isort .
 
 check:
