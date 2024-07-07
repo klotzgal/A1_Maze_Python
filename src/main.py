@@ -1,5 +1,5 @@
-from algorithm import bfs, get_path, is_perfect_maze
-from load import Loader
+from modules.algorithm import bfs, get_path, is_perfect_maze
+from modules.load import Loader
 
 if __name__ == '__main__':
     loader = Loader()

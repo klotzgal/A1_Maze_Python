@@ -38,8 +38,7 @@ check:
 	$(PYEXEC) mypy main.py --strict
 
 tests:
-	export $(grep -v '^#' test.env | xargs)
-	$(VENV)/bin/pytest -W ignore::DeprecationWarning
+	$(PYEXEC) pytest #-W ignore::DeprecationWarning
 
 venv:
 	poetry env use $(PYTHON)
