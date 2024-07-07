@@ -3,7 +3,7 @@ package-mode = false
 name = "Maze"
 version = "0.1.0"
 description = ""
-authors = ["klotzgal <ggg44466635@gmail.com>"]
+authors = ["klotzgal <ggg44466635@gmail.com>", "pickling <>"]
 readme = "README.md"
 packages = [{include = "src"}]
 
