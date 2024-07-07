@@ -1,8 +1,9 @@
-from maze import Maze, Cell
 from collections import deque
 
+from maze import Cell, Maze
 
-def bfs(maze: Maze, s: tuple) -> list[list[tuple[int, int]]]:
+
+def bfs(maze: Maze, s: tuple[int, int]) -> list[list[tuple[int, int]]]:
     """
 
     Args:
@@ -12,11 +13,12 @@ def bfs(maze: Maze, s: tuple) -> list[list[tuple[int, int]]]:
     Returns:
         list[list[tuple[int, int]]]: Матрица, в которой у каждой точки записана точка, из которой в неё пришли.
     """
-    INF: int = 10 ** 9
+    INF: int = 10**9
     dist: list[list[int]] = [[INF] * maze.rows for _ in range(maze.cols)]
     frm: list[list[tuple[int, int]]] = [
-        [(-1, -1)] * maze.rows for _ in range(maze.cols)]
-    q: deque = deque()
+        [(-1, -1)] * maze.rows for _ in range(maze.cols)
+    ]
+    q: deque[Cell] = deque()
     dist[s[1]][s[0]] = 0
     q.append(maze.field[s[1]][s[0]])
 
@@ -24,14 +26,15 @@ def bfs(maze: Maze, s: tuple) -> list[list[tuple[int, int]]]:
         v: Cell = q.pop()
         for side, have_wall in v.walls.items():
             if not have_wall:
+                to: Cell
                 if side == 'top':
-                    to: Cell = maze.field[v.y - 1][v.x]
+                    to = maze.field[v.y - 1][v.x]
                 elif side == 'bottom':
-                    to: Cell = maze.field[v.y + 1][v.x]
+                    to = maze.field[v.y + 1][v.x]
                 elif side == 'left':
-                    to: Cell = maze.field[v.y][v.x - 1]
+                    to = maze.field[v.y][v.x - 1]
                 elif side == 'right':
-                    to: Cell = maze.field[v.y][v.x + 1]
+                    to = maze.field[v.y][v.x + 1]
                 if dist[to.y][to.x] == INF:
                     dist[to.y][to.x] = dist[v.y][v.x] + 1
                     frm[to.y][to.x] = (v.x, v.y)
@@ -39,7 +42,9 @@ def bfs(maze: Maze, s: tuple) -> list[list[tuple[int, int]]]:
     return frm
 
 
-def get_path(frm: list[list[tuple[int, int]]], f: tuple[int, int]) -> list[tuple[int, int]]:
+def get_path(
+    frm: list[list[tuple[int, int]]], f: tuple[int, int]
+) -> list[tuple[int, int]]:
     """
 
     Args:

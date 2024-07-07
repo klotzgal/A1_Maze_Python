@@ -1,0 +1,20 @@
+[tool.poetry]
+package-mode = false
+name = "Maze"
+version = "0.1.0"
+description = ""
+authors = ["klotzgal <ggg44466635@gmail.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.1"
+mypy = "^1.10.1"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
