@@ -1,6 +1,6 @@
 from collections import deque
 
-from maze import Cell, Maze
+from modules.maze import Cell, Maze
 
 
 def bfs(maze: Maze, s: tuple[int, int]) -> list[list[tuple[int, int]]]:

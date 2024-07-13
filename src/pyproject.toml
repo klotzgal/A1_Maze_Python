@@ -9,11 +9,14 @@ packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pytest = "^8.2.2"
+pygame = "^2.6.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.5.1"
 mypy = "^1.10.1"
 isort = "^5.13.2"
+pytest-cov = "^5.0.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -21,3 +24,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff.format]
 quote-style = "single"
+
+[tool.pytest]
+pythonpath = "src"
+python_files = "test_*.py"
+testpaths = ["src/tests"]
+log_cli = true
+log_cli_level = "INFO"
