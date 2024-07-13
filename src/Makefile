@@ -1,9 +1,9 @@
-.PHONY: all install uninstall clean dvi dist tests format check
+.PHONY: all install uninstall clean fclean dvi dist tests format check
 PYTHON=python3.11
 VENV=.venv
 PYEXEC=poetry run
 
-all: test
+all: tests
 
 install:
 # TODO: Заменить на установку проекта в каталог ../build
@@ -14,7 +14,7 @@ uninstall:
 	echo "Uninstalling..."
 
 clean:
-	rm -rf build *cache* .*cache dist
+	rm -rf build *cache* .*cache dist .coverage htmlcov
 
 fclean: clean
 	rm -rf $(VENV)
@@ -30,8 +30,8 @@ dist:
 	tar -czf dist.tar.gz dist
 
 format:
-	$(PYEXEC) ruff format .
 	$(PYEXEC) isort .
+	$(PYEXEC) ruff format .
 
 check:
 	$(PYEXEC) ruff check
@@ -39,6 +39,10 @@ check:
 
 tests:
 	$(PYEXEC) pytest #-W ignore::DeprecationWarning
+
+cov:
+	$(PYEXEC) pytest --cov --cov-report=html #-W ignore::DeprecationWarning
+	open htmlcov/index.html
 
 venv:
 	poetry env use $(PYTHON)

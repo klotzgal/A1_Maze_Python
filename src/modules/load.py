@@ -1,3 +1,5 @@
+from modules.algorithm import bfs, is_perfect_maze
+from modules.exception import BaseMazeException
 from modules.maze import Maze
 
 
@@ -33,6 +35,9 @@ class Loader:
             self.maze.field[0][row].walls['top'] = True
         for col in range(cols):
             self.maze.field[col][0].walls['left'] = True
+
+        if not is_perfect_maze(bfs(self.maze, (0, 0))):
+            raise BaseMazeException('Invalid maze')
         return self.maze
 
     def upload(self, file: str, maze: Maze) -> None:
