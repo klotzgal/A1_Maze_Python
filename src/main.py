@@ -1,6 +1,6 @@
-from modules.algorithm import bfs, get_path, is_perfect_maze
-from modules.load import Loader
-from modules.ui import main_loop
+from modules.ui import UI
 
 if __name__ == '__main__':
-    main_loop()
+    # TODO: Сделать с asyncio
+    ui = UI()
+    ui.main_loop()
