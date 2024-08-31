@@ -42,11 +42,10 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import (
     QApplication,
-    QGroupBox,
+    QFrame,
+    QHBoxLayout,
     QPushButton,
-    QRadioButton,
     QSizePolicy,
-    QSplitter,
     QVBoxLayout,
     QWidget,
 )
@@ -56,73 +55,91 @@ class Ui_View(object):
     def setupUi(self, View):
         if not View.objectName():
             View.setObjectName('View')
-        View.resize(934, 520)
+        View.resize(520, 578)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(View.sizePolicy().hasHeightForWidth())
         View.setSizePolicy(sizePolicy)
-        View.setMinimumSize(QSize(934, 520))
-        View.setMaximumSize(QSize(934, 520))
-        View.setStyleSheet('')
-        self.splitter_2 = QSplitter(View)
-        self.splitter_2.setObjectName('splitter_2')
-        self.splitter_2.setGeometry(QRect(9, 9, 840, 500))
+        View.setMinimumSize(QSize(520, 578))
+        View.setMaximumSize(QSize(520, 578))
+        View.setStyleSheet(
+            'QWidget#View {\n'
+            '	background-color: #222324;\n'
+            '}\n'
+            '\n'
+            'QPushButton {\n'
+            '	background-color: #222324;\n'
+            '	color: #ffffff;\n'
+            '}\n'
+            '\n'
+            'QLineEdit {\n'
+            '	color: #ffffff;\n'
+            '}\n'
+            '\n'
+            'QLabel {\n'
+            '	color: #ffffff;\n'
+            '}\n'
+            '\n'
+            'QFrame {\n'
+            '	background-color: #222324;\n'
+            '}\n'
+            ''
+        )
+        self.verticalLayout_3 = QVBoxLayout(View)
+        self.verticalLayout_3.setObjectName('verticalLayout_3')
+        self.main_frame = QFrame(View)
+        self.main_frame.setObjectName('main_frame')
+        sizePolicy.setHeightForWidth(self.main_frame.sizePolicy().hasHeightForWidth())
+        self.main_frame.setSizePolicy(sizePolicy)
+        self.main_frame.setMinimumSize(QSize(500, 500))
+        self.main_frame.setMaximumSize(QSize(500, 500))
+        self.main_frame.setStyleSheet('')
+
+        self.verticalLayout_3.addWidget(self.main_frame)
+
+        self.frame = QFrame(View)
+        self.frame.setObjectName('frame')
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout = QHBoxLayout(self.frame)
+        self.horizontalLayout.setObjectName('horizontalLayout')
+        self.download_button = QPushButton(self.frame)
+        self.download_button.setObjectName('download_button')
         sizePolicy1 = QSizePolicy(
-            QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.MinimumExpanding
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
         )
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.splitter_2.sizePolicy().hasHeightForWidth())
-        self.splitter_2.setSizePolicy(sizePolicy1)
-        self.splitter_2.setOrientation(Qt.Horizontal)
-        self.left_aside = QWidget(self.splitter_2)
-        self.left_aside.setObjectName('left_aside')
-        sizePolicy.setHeightForWidth(self.left_aside.sizePolicy().hasHeightForWidth())
-        self.left_aside.setSizePolicy(sizePolicy)
-        self.left_aside.setMinimumSize(QSize(500, 500))
-        self.left_aside.setMaximumSize(QSize(500, 500))
-        self.left_aside.setStyleSheet(
-            'QWidget#left_aside {\n' '	background-color: rgb(0, 0, 0);\n' '}'
+        sizePolicy1.setHeightForWidth(
+            self.download_button.sizePolicy().hasHeightForWidth()
         )
-        self.splitter_2.addWidget(self.left_aside)
-        self.groupBox = QGroupBox(self.splitter_2)
-        self.groupBox.setObjectName('groupBox')
-        sizePolicy2 = QSizePolicy(
-            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred
+        self.download_button.setSizePolicy(sizePolicy1)
+        self.download_button.setStyleSheet('')
+
+        self.horizontalLayout.addWidget(self.download_button)
+
+        self.generate_button = QPushButton(self.frame)
+        self.generate_button.setObjectName('generate_button')
+        sizePolicy1.setHeightForWidth(
+            self.generate_button.sizePolicy().hasHeightForWidth()
         )
-        sizePolicy2.setHorizontalStretch(40)
-        sizePolicy2.setVerticalStretch(40)
-        sizePolicy2.setHeightForWidth(self.groupBox.sizePolicy().hasHeightForWidth())
-        self.groupBox.setSizePolicy(sizePolicy2)
-        self.groupBox.setMinimumSize(QSize(0, 0))
-        self.verticalLayout = QVBoxLayout(self.groupBox)
-        self.verticalLayout.setObjectName('verticalLayout')
-        self.splitter = QSplitter(self.groupBox)
-        self.splitter.setObjectName('splitter')
-        self.splitter.setOrientation(Qt.Horizontal)
-        self.maze_radio_button = QRadioButton(self.splitter)
-        self.maze_radio_button.setObjectName('maze_radio_button')
-        self.splitter.addWidget(self.maze_radio_button)
-        self.cava_radio_button = QRadioButton(self.splitter)
-        self.cava_radio_button.setObjectName('cava_radio_button')
-        self.splitter.addWidget(self.cava_radio_button)
+        self.generate_button.setSizePolicy(sizePolicy1)
+        self.generate_button.setStyleSheet('')
 
-        self.verticalLayout.addWidget(self.splitter)
+        self.horizontalLayout.addWidget(self.generate_button)
 
-        self.load_button = QPushButton(self.groupBox)
-        self.load_button.setObjectName('load_button')
-        sizePolicy3 = QSizePolicy(
-            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        self.upload_button = QPushButton(self.frame)
+        self.upload_button.setObjectName('upload_button')
+        sizePolicy1.setHeightForWidth(
+            self.upload_button.sizePolicy().hasHeightForWidth()
         )
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.load_button.sizePolicy().hasHeightForWidth())
-        self.load_button.setSizePolicy(sizePolicy3)
+        self.upload_button.setSizePolicy(sizePolicy1)
+        self.upload_button.setStyleSheet('')
 
-        self.verticalLayout.addWidget(self.load_button)
+        self.horizontalLayout.addWidget(self.upload_button)
 
-        self.splitter_2.addWidget(self.groupBox)
+        self.verticalLayout_3.addWidget(self.frame)
 
         self.retranslateUi(View)
 
@@ -132,13 +149,12 @@ class Ui_View(object):
 
     def retranslateUi(self, View):
         View.setWindowTitle(QCoreApplication.translate('View', 'View', None))
-        self.groupBox.setTitle('')
-        self.maze_radio_button.setText(
-            QCoreApplication.translate('View', 'RadioButton', None)
+        self.download_button.setText(
+            QCoreApplication.translate('View', 'Downoad', None)
         )
-        self.cava_radio_button.setText(
-            QCoreApplication.translate('View', 'RadioButton', None)
+        self.generate_button.setText(
+            QCoreApplication.translate('View', 'Generate', None)
         )
-        self.load_button.setText(QCoreApplication.translate('View', 'Load', None))
+        self.upload_button.setText(QCoreApplication.translate('View', 'Upload', None))
 
     # retranslateUi

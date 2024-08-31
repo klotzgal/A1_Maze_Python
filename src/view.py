@@ -1,8 +1,8 @@
 # This Python file uses the following encoding: utf-8
 import sys
 
-from PySide6.QtCore import QRect, Qt
-from PySide6.QtWidgets import QApplication, QGridLayout, QWidget
+from PySide6.QtCore import QRect
+from PySide6.QtWidgets import QApplication, QWidget
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -15,20 +15,16 @@ from ui.maze import MazeWidget
 class View(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.text = 'text'
         self.ui = Ui_View()
-        self.gridLayout = QGridLayout(self)
         self.ui.setupUi(self)
 
-        maze_widget = MazeWidget(self.ui.left_aside)
-        maze_widget.setObjectName('maze_widget')
-        maze_widget.setGeometry(QRect(0, 0, 500, 500))
-        # self.gridLayout.addWidget(maze_widget)
-        # widget = QWidget(self)
-        # widget.setStyleSheet('background-color: rgb(0, 255, 0)')
-        # self.gridLayout.addWidget(widget)
-        # self.gridLayout.addWidget(QWidget(self), 1, 1)
-        # self.ui.main_layout.addWidget(maze_widget)
+        self.maze_widget = MazeWidget(self, self.ui.main_frame)
+        self.maze_widget.setObjectName('maze_widget')
+        self.maze_widget.setGeometry(QRect(0, 0, 500, 500))
+        self.ui.download_button.clicked.connect(
+            self.maze_widget._download_button_pressed
+        )
+        self.ui.upload_button.clicked.connect(self.maze_widget._upload_button_pressed)
 
 
 if __name__ == '__main__':
