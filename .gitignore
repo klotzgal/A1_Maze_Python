@@ -49,3 +49,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# My
+*venv
+.vscode
+*cache*
+build
+dist
+.coverage
+*.log
