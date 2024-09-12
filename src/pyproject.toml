@@ -8,10 +8,8 @@ readme = "README.md"
 packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.13"
+python = "<3.13,>=3.9"
 pytest = "^8.2.2"
-pygame = "^2.6.0"
-easygui = "^0.98.3"
 pyside6 = "^6.7.2"
 
 [tool.poetry.group.dev.dependencies]
