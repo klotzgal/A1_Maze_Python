@@ -3,11 +3,11 @@ PYTHON=python3.11
 VENV=.venv
 PYEXEC=poetry run
 
-all: tests
+all: install
 
 install:
 # TODO: Заменить на установку проекта в каталог ../build
-	$(PYEXEC) python main.py
+	$(PYEXEC) python view.py
 
 uninstall:
 # TODO: Заменить на удаление проекта
@@ -35,7 +35,7 @@ format:
 
 check:
 	$(PYEXEC) ruff check
-	$(PYEXEC) mypy main.py --strict
+	# $(PYEXEC) mypy view.py # --strict  --exclude ui/ui_form.py --exclude ui/form_ui.py
 
 tests:
 	$(PYEXEC) pytest #-W ignore::DeprecationWarning

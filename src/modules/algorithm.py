@@ -1,5 +1,6 @@
 from collections import deque
 
+from modules.exception import BaseMazeException
 from modules.maze import Cell, Maze
 
 
@@ -13,6 +14,7 @@ def bfs(maze: Maze, s: tuple[int, int]) -> list[list[tuple[int, int]]]:
     Returns:
         list[list[tuple[int, int]]]: Матрица, в которой у каждой точки записана точка, из которой в неё пришли.
     """
+
     INF: int = 10**9
     dist: list[list[int]] = [[INF] * maze.rows for _ in range(maze.cols)]
     frm: list[list[tuple[int, int]]] = [
@@ -54,6 +56,8 @@ def get_path(
     Returns:
         list[tuple[int, int]]: Восстановленный путь
     """
+    if f[0] >= len(frm[0]) or f[1] >= len(frm):
+        raise BaseMazeException('End point out of range')
     v: tuple[int, int] = f
     path: list[tuple[int, int]] = []
     while v != (-1, -1):

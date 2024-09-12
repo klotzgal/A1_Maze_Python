@@ -27,6 +27,7 @@ class Maze:
         ]
 
     # Метод для дебага. Выводит стенки с заданной стороны
+    # TODO: Убрать это
     def print(self, side: str) -> None:
         print('______', side, '______')
         for col in range(self.cols):

@@ -9,11 +9,14 @@ class Loader:
 
     def download(self, file: str) -> Maze:
         # Считывание всего файла
-        with open(file, 'r') as f:
-            maze_data = [list(map(int, line.split())) for line in f]
-        # Создание пустого лабиринта
-        rows, cols = maze_data[0]
-        self.maze = Maze(rows, cols)
+        try:
+            with open(file, 'r') as f:
+                maze_data = [list(map(int, line.split())) for line in f]
+            # Создание пустого лабиринта
+            rows, cols = maze_data[0]
+            self.maze = Maze(rows, cols)
+        except Exception as err:
+            raise BaseMazeException(f'Incorrect file [{file}]: {err}')
         # Заполнение правых и левых стенок из 1 матрицы
         for col in range(cols):
             i = col + 1
