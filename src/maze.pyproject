@@ -1,6 +1,6 @@
 {
     "files": [
-        "view.py",
+        "main.py",
         "ui/form.ui",
         "ui/maze.py"
     ]

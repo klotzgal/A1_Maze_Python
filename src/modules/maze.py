@@ -25,16 +25,3 @@ class Maze:
         self.field: list[list[Cell]] = [
             [Cell(row, col) for row in range(rows)] for col in range(cols)
         ]
-
-    # Метод для дебага. Выводит стенки с заданной стороны
-    # TODO: Убрать это
-    def print(self, side: str) -> None:
-        print('______', side, '______')
-        for col in range(self.cols):
-            for row in range(self.rows):
-                if self.field[col][row].walls[side]:
-                    print('1', end=' ')
-                else:
-                    print('0', end=' ')
-            print()
-        print('___________________')

@@ -1,4 +1,4 @@
-.PHONY: all install uninstall clean fclean dvi dist tests format check
+.PHONY: all install uninstall clean fclean dvi dist tests format check cov venv
 PYTHON=python3.11
 VENV=.venv
 PYEXEC=poetry run
@@ -6,12 +6,10 @@ PYEXEC=poetry run
 all: install
 
 install:
-# TODO: Заменить на установку проекта в каталог ../build
-	$(PYEXEC) python view.py
+	$(PYEXEC) pyinstaller --onefile --windowed main.py
 
 uninstall:
-# TODO: Заменить на удаление проекта
-	echo "Uninstalling..."
+	rm -r dist
 
 clean:
 	rm -rf build *cache* .*cache dist .coverage htmlcov
@@ -23,10 +21,7 @@ dvi:
 # TODO: Добавить документацию
 	open README.md
 
-dist:
-# TODO: Проверить после добавления install
-	mkdir -p dist
-	cp -r build/* dist
+dist: install
 	tar -czf dist.tar.gz dist
 
 format:
@@ -35,7 +30,6 @@ format:
 
 check:
 	$(PYEXEC) ruff check
-	# $(PYEXEC) mypy view.py # --strict  --exclude ui/ui_form.py --exclude ui/form_ui.py
 
 tests:
 	$(PYEXEC) pytest #-W ignore::DeprecationWarning
