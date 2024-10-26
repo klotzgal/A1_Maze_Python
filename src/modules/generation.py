@@ -39,6 +39,8 @@ def display_maze(field: list[list[Cell]], rows, cols) -> None:
 class MazeEller(Maze):
     def __init__(self, rows: int, cols: int) -> None:
         super().__init__(rows, cols)
+        rows: int = rows
+        cols: int = cols
 
     def __repr__(self) -> str:
         maze_str = ''
@@ -72,11 +74,8 @@ class MazeEller(Maze):
         return maze_str
 
     def generate(self) -> None:
-        rows = self.rows
-        cols = self.cols
-
-        # Инициализация структур данных
-        sets = list(range(cols))  # Наборы для объединения по строкам
+        # Создадим пустую строку, размер строки равен cols лабиринта,
+        sets = list(range(self.cols))
 
         def find_set(sets, col):
             while sets[col] != col:
@@ -90,16 +89,16 @@ class MazeEller(Maze):
                 sets[root2] = root1
 
         for row in range(rows):
-            for col in range(cols):
-                if col < cols - 1:
+            for col in range(self.cols):
+                if col < self.cols - 1:
                     if find_set(sets, col) != find_set(sets, col + 1) and random.choice([True, False]):
                         self.field[row][col].walls['right'] = True
                         self.field[row][col + 1].walls['left'] = True
                         union_sets(sets, col, col + 1)
 
             if row < rows - 1:
-                new_sets = list(range(cols))
-                for col in range(cols):
+                new_sets = list(range(self.cols))
+                for col in range(self.cols):
                     if find_set(sets, col) != find_set(new_sets, col) and random.choice([True, False]):
                         self.field[row][col].walls['bottom'] = True
                         self.field[row + 1][col].walls['top'] = True
