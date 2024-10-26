@@ -1,6 +1,6 @@
 import random
 from typing import List
-from maze import Maze, Cell
+from modules.maze import Maze, Cell
 
 
 def display_maze(field: list[list[Cell]], rows, cols) -> None:
