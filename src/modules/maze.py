@@ -1,13 +1,21 @@
+from typing import Optional, Dict
+import copy
+
+
 class Cell:
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int, walls: Optional[Dict[str, bool]] = None, set_id: int = 0) -> None:
         self.x: int = x
         self.y: int = y
-        self.walls: dict[str, bool] = {
-            'top': False,
-            'left': False,
-            'right': False,
-            'bottom': False,
-        }
+        if walls is None:
+            self.walls: Dict[str, bool] = {
+                'top': False,
+                'left': False,
+                'right': False,
+                'bottom': False,
+            }
+        else:
+            self.walls = copy.deepcopy(walls)
+        self.set_id = set_id  # Идентификатор множества для алгоритма Эллера
 
     def __eq__(self, value: object) -> bool:
         if isinstance(value, Cell):
@@ -15,7 +23,7 @@ class Cell:
         return False
 
     def __repr__(self) -> str:
-        return f'({str(self.x)}, {str(self.y)})'
+        return f'Cell({self.x}, {self.y}, set_id={self.set_id})'
 
 
 class Maze:
@@ -25,3 +33,17 @@ class Maze:
         self.field: list[list[Cell]] = [
             [Cell(row, col) for row in range(rows)] for col in range(cols)
         ]
+
+    def print(self):
+        print(self.rows, "rows, x")
+        print(self.cols, "cols, y")
+        for col in range(self.cols):
+            for row in range(self.rows):
+                print(self.field[col][row], end=" ")
+            print()
+        print(self.field)
+
+
+if __name__ == "__main__":
+    m = Maze(rows=2, cols=5)
+    m.print()
