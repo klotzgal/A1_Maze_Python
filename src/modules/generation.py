@@ -88,7 +88,7 @@ class MazeEller(Maze):
             if root1 != root2:
                 sets[root2] = root1
 
-        for row in range(rows):
+        for row in range(self.rows):
             for col in range(self.cols):
                 if col < self.cols - 1:
                     if find_set(sets, col) != find_set(sets, col + 1) and random.choice([True, False]):
@@ -96,7 +96,7 @@ class MazeEller(Maze):
                         self.field[row][col + 1].walls['left'] = True
                         union_sets(sets, col, col + 1)
 
-            if row < rows - 1:
+            if row < self.rows - 1:
                 new_sets = list(range(self.cols))
                 for col in range(self.cols):
                     if find_set(sets, col) != find_set(new_sets, col) and random.choice([True, False]):
