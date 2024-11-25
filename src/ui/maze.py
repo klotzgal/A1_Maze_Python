@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QFileDialog, QWidget
 
 from modules.algorithm import bfs, get_path
 from modules.exception import BaseMazeException
+from modules.generation import MazeEller
 from modules.load import Loader
 from modules.maze import Cell, Maze
 
@@ -47,7 +48,7 @@ class MazeWidget(QWidget):
             self.maze, self.STEP_X, self.STEP_Y = None, None, None
             self.exception = err
             logging.error(
-                f'In _upload_button_pressed() raised exception [{err}]', exc_info=err
+                f'In _download_button_pressed() raised exception [{err.__class__.__name__}]', exc_info=err
             )
         self.repaint()
 
@@ -59,6 +60,16 @@ class MazeWidget(QWidget):
             logging.info(f'Upload in file [{file}]')
             Loader().upload(file, self.maze)
 
+    def _generate_button_pressed(self):
+        if self.maze is not None:
+            self.maze = MazeEller(self.maze.rows, self.maze.cols)
+        else:
+            self.maze = MazeEller(10, 10)
+        self.STEP_X = int(500 / self.maze.rows)
+        self.STEP_Y = int(500 / self.maze.cols)
+        self.maze.generate()
+        self.repaint()
+
     def _find_path(self) -> None:
         try:
             if self.maze is None or self.STEP_X is None or self.STEP_Y is None:
@@ -69,7 +80,8 @@ class MazeWidget(QWidget):
             logging.info(f'Path: {self.path}')
         except Exception as err:
             self.exception = err
-            logging.error(f'In _find_path() raised exception [{err}]', exc_info=err)
+            logging.error(
+                f'In _find_path() raised exception [{err}]', exc_info=err)
         self.repaint()
 
     def paintEvent(self, event: QPaintEvent) -> None:

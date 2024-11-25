@@ -24,7 +24,10 @@ class View(QWidget):
         self.ui.download_button.clicked.connect(
             self.maze_widget._download_button_pressed
         )
-        self.ui.upload_button.clicked.connect(self.maze_widget._upload_button_pressed)
+        self.ui.upload_button.clicked.connect(
+            self.maze_widget._upload_button_pressed)
+        self.ui.generate_button.clicked.connect(
+            self.maze_widget._generate_button_pressed)
 
 
 if __name__ == '__main__':

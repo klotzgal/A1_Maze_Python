@@ -18,7 +18,6 @@ fclean: clean
 	rm -rf $(VENV)
 
 dvi:
-# TODO: Добавить документацию
 	open README.md
 
 dist: install
@@ -42,3 +41,7 @@ venv:
 	poetry env use $(PYTHON)
 	poetry config --local virtualenvs.in-project true
 	poetry install
+
+run:
+	$(PYEXEC) python main.py
+
