@@ -48,7 +48,7 @@ class MazeWidget(QWidget):
             self.maze, self.STEP_X, self.STEP_Y = None, None, None
             self.exception = err
             logging.error(
-                f'In _upload_button_pressed() raised exception [{err}]', exc_info=err
+                f'In _download_button_pressed() raised exception [{err.__class__.__name__}]', exc_info=err
             )
         self.repaint()
 

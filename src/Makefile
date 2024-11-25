@@ -18,7 +18,6 @@ fclean: clean
 	rm -rf $(VENV)
 
 dvi:
-# TODO: Добавить документацию
 	open README.md
 
 dist: install
