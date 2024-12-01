@@ -62,10 +62,8 @@ class MazeWidget(QWidget):
             Loader().upload(file, self.maze)
 
     def _generate_button_pressed(self):
-        if self.maze is not None:
-            self.maze = MazeEller(self.maze.rows, self.maze.cols)
-        else:
-            self.maze = MazeEller(10, 10)
+        self._clear_data()
+        self.maze = MazeEller(int(self.main_window.ui.width.text()), int(self.main_window.ui.height.text()))
         self.STEP_X = int(500 / self.maze.cols)
         self.STEP_Y = int(500 / self.maze.rows)
         self.maze.generate()
@@ -87,19 +85,19 @@ class MazeWidget(QWidget):
     def paintEvent(self, event: QPaintEvent) -> None:
         qp: QPainter = QPainter()
         qp.begin(self)
-        if self.maze and self.STEP_X and self.STEP_Y:
-            self._draw_maze(qp)
-            if self.path:
-                self._draw_path(qp)
-            if self.start:
-                qp.setPen(QPen(Qt.green, 6, Qt.SolidLine))
-                qp.drawPoint(
-                    self.start[0] * self.STEP_X + self.STEP_X // 2,
-                    self.start[1] * self.STEP_Y + self.STEP_Y // 2,
-                )
-        # elif self.exception :
-        #     self._draw_exception(event, qp)
-        qp.end()
+        try:
+            if self.maze and self.STEP_X and self.STEP_Y:
+                self._draw_maze(qp)
+                if self.path:
+                    self._draw_path(qp)
+                if self.start:
+                    qp.setPen(QPen(Qt.green, 6, Qt.SolidLine))
+                    qp.drawPoint(
+                        self.start[0] * self.STEP_X + self.STEP_X // 2,
+                        self.start[1] * self.STEP_Y + self.STEP_Y // 2,
+                    )
+        finally:
+            qp.end()
         return super().paintEvent(event)
 
     def mousePressEvent(self, event) -> None:

@@ -6,7 +6,8 @@ PYEXEC=poetry run
 all: install
 
 install:
-	$(PYEXEC) python main.py
+	$(PYEXEC) pyinstaller --onefile --windowed main.py
+	./dist/main
 
 uninstall:
 	rm -r dist
@@ -40,3 +41,6 @@ cov:
 venv:
 	poetry env use $(PYTHON)
 	poetry install
+
+run:
+	$(PYEXEC) python main.py
