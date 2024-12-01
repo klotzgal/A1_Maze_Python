@@ -42,8 +42,8 @@ class MazeWidget(QWidget):
         self._clear_data()
         try:
             self.maze = Loader().download(file)
-            self.STEP_X = int(500 / self.maze.rows)
-            self.STEP_Y = int(500 / self.maze.cols)
+            self.STEP_X = int(500 / self.maze.cols)
+            self.STEP_Y = int(500 / self.maze.rows)
         except Exception as err:
             self.maze, self.STEP_X, self.STEP_Y = None, None, None
             self.exception = err
@@ -66,8 +66,8 @@ class MazeWidget(QWidget):
             self.maze = MazeEller(self.maze.rows, self.maze.cols)
         else:
             self.maze = MazeEller(10, 10)
-        self.STEP_X = int(500 / self.maze.rows)
-        self.STEP_Y = int(500 / self.maze.cols)
+        self.STEP_X = int(500 / self.maze.cols)
+        self.STEP_Y = int(500 / self.maze.rows)
         self.maze.generate()
         self.repaint()
 
@@ -126,8 +126,8 @@ class MazeWidget(QWidget):
         pen: QPen = QPen(Qt.red, 2, Qt.SolidLine)
 
         qp.setPen(pen)
-        for y in range(self.maze.cols):
-            for x in range(self.maze.rows):
+        for x in range(self.maze.cols):
+            for y in range(self.maze.rows):
                 cell: Cell = self.maze.field[y][x]
                 if cell.walls['top']:
                     qp.drawLine(

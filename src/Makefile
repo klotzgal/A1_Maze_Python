@@ -7,7 +7,6 @@ all: install
 
 install:
 	$(PYEXEC) python main.py
-	$(PYEXEC) python main.py
 
 uninstall:
 	rm -r dist
