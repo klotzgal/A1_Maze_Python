@@ -48,7 +48,8 @@ class MazeWidget(QWidget):
             self.maze, self.STEP_X, self.STEP_Y = None, None, None
             self.exception = err
             logging.error(
-                f'In _download_button_pressed() raised exception [{err.__class__.__name__}]', exc_info=err
+                f'In _download_button_pressed() raised exception [{err.__class__.__name__}]',
+                exc_info=err,
             )
         self.repaint()
 
@@ -80,8 +81,7 @@ class MazeWidget(QWidget):
             logging.info(f'Path: {self.path}')
         except Exception as err:
             self.exception = err
-            logging.error(
-                f'In _find_path() raised exception [{err}]', exc_info=err)
+            logging.error(f'In _find_path() raised exception [{err}]', exc_info=err)
         self.repaint()
 
     def paintEvent(self, event: QPaintEvent) -> None:

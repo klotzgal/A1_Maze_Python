@@ -58,13 +58,3 @@ class Loader:
                         ' '.join(list(map(str, [int(i.walls['bottom']) for i in row])))
                         + '\n'
                     )
-
-
-if __name__ == '__main__':
-    loader = Loader()
-    m = loader.download('files/1.txt')
-    m.print('right')
-    m.print('left')
-    m.print('bottom')
-    m.print('top')
-    loader.upload('files/maze.txt', m)

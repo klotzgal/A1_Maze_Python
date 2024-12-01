@@ -1,12 +1,13 @@
 .PHONY: all install uninstall clean fclean dvi dist tests format check cov venv
-PYTHON=python3.11
+PYTHON=/usr/bin/python3.11
 VENV=.venv
 PYEXEC=poetry run
 
 all: install
 
 install:
-	$(PYEXEC) pyinstaller --onefile --windowed main.py
+	$(PYEXEC) python main.py
+	$(PYEXEC) python main.py
 
 uninstall:
 	rm -r dist
@@ -39,9 +40,4 @@ cov:
 
 venv:
 	poetry env use $(PYTHON)
-	poetry config --local virtualenvs.in-project true
 	poetry install
-
-run:
-	$(PYEXEC) python main.py
-
