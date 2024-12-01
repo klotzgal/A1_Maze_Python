@@ -1,5 +1,5 @@
 .PHONY: all install uninstall clean fclean dvi dist tests format check cov venv
-PYTHON=/usr/bin/python3.11
+PYTHON=python3.11
 VENV=.venv
 PYEXEC=poetry run
 

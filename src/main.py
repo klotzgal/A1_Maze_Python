@@ -2,8 +2,8 @@
 import sys
 
 from PySide6.QtCore import QRect
-from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtGui import QIntValidator
+from PySide6.QtWidgets import QApplication, QWidget
 
 # Important:
 # You need to run the following command to generate the ui_form.py file

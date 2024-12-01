@@ -63,7 +63,10 @@ class MazeWidget(QWidget):
 
     def _generate_button_pressed(self):
         self._clear_data()
-        self.maze = MazeEller(int(self.main_window.ui.width.text()), int(self.main_window.ui.height.text()))
+        self.maze = MazeEller(
+            int(self.main_window.ui.width.text()),
+            int(self.main_window.ui.height.text()),
+        )
         self.STEP_X = int(500 / self.maze.cols)
         self.STEP_Y = int(500 / self.maze.rows)
         self.maze.generate()

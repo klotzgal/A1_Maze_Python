@@ -32,5 +32,5 @@ class Maze:
         self.rows: int = rows
         self.cols: int = cols
         self.field: list[list[Cell]] = [
-            [Cell(col, row) for col in range(cols)]  for row in range(rows)
+            [Cell(col, row) for col in range(cols)] for row in range(rows)
         ]
