@@ -7,6 +7,7 @@ all: install
 
 install:
 	$(PYEXEC) pyinstaller --onefile --windowed main.py
+	./dist/main
 
 uninstall:
 	rm -r dist
@@ -39,9 +40,7 @@ cov:
 
 venv:
 	poetry env use $(PYTHON)
-	poetry config --local virtualenvs.in-project true
 	poetry install
 
 run:
 	$(PYEXEC) python main.py
-

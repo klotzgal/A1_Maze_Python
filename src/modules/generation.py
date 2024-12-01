@@ -1,6 +1,6 @@
 import random
-from modules.maze import Maze, Cell
-from typing import List, Dict
+
+from modules.maze import Cell, Maze
 
 CLOSED_WALLS = {
     'top': True,
@@ -11,15 +11,14 @@ CLOSED_WALLS = {
 
 
 class State:
-    def __init__(self, width: int, y: int = 0, next_set=-1):
+    def __init__(self, width: int, y: int = 0, next_set: int = -1) -> None:
         self.width = width
         self.y = y
         self.next_set = next_set
-        self.cells: List[Cell] = [Cell(x, y, CLOSED_WALLS)
-                                  for x in range(width)]
-        self.sets: Dict[int, List[Cell]] = {}
+        self.cells: list[Cell] = [Cell(x, y, CLOSED_WALLS) for x in range(width)]
+        self.sets: dict[int, list[Cell]] = {}
 
-    def populate(self):
+    def populate(self) -> None:
         """Назначение уникальных множеств всем клеткам в текущей строке."""
         for cell in self.cells:
             if cell.set_id == 0:
@@ -28,14 +27,15 @@ class State:
                 self.sets[self.next_set] = [cell]
         return self
 
-    def next(self):
+    def next(self) -> None:
         """Создание следующей строки на основе текущей."""
         new_state = State(self.width, self.y + 1, self.next_set)
-        new_state.cells = [Cell(cell.x, self.y + 1, CLOSED_WALLS)
-                           for cell in self.cells]
+        new_state.cells = [
+            Cell(cell.x, self.y + 1, CLOSED_WALLS) for cell in self.cells
+        ]
         return new_state
 
-    def merge(self, sink_cell: Cell, target_cell: Cell):
+    def merge(self, sink_cell: Cell, target_cell: Cell) -> None:
         """Объединение двух множеств."""
         sink_set, target_set = sink_cell.set_id, target_cell.set_id
         if sink_set == target_set:
@@ -51,7 +51,7 @@ class State:
         """Проверка принадлежности клеток одному множеству."""
         return a.set_id == b.set_id
 
-    def add_to_set(self, cell: Cell, set_id: int):
+    def add_to_set(self, cell: Cell, set_id: int) -> None:
         """Добавление клетки в множество."""
         cell.set_id = set_id
         if set_id not in self.sets:
@@ -63,19 +63,21 @@ class MazeEller(Maze):
     def __init__(self, rows: int, cols: int) -> None:
         self.rows = rows
         self.cols = cols
-        self.field: List[List[Cell]] = [
+        self.field: list[list[Cell]] = [
             [Cell(col, row, CLOSED_WALLS) for col in range(cols)] for row in range(rows)
         ]
 
     @staticmethod
-    def step(state: State, finish=False):
+    def step(state: State, finish: bool = False) -> None:
         """Основной шаг алгоритма Эллера."""
         # Создание горизонтальных проходов
         for i in range(state.width - 1):
             current_cell = state.cells[i]
             next_cell = state.cells[i + 1]
 
-            if not state.same(current_cell, next_cell) and (finish or random.choice([True, False])):
+            if not state.same(current_cell, next_cell) and (
+                finish or random.choice([True, False])
+            ):
                 current_cell.walls['right'] = False
                 next_cell.walls['left'] = False
                 state.merge(current_cell, next_cell)
@@ -90,7 +92,8 @@ class MazeEller(Maze):
         for set_cells in state.sets.values():
             # Выбираем случайные клетки из множества для вертикального соединения
             cells_to_connect = random.sample(
-                set_cells, max(1, random.randint(1, len(set_cells))))
+                set_cells, max(1, random.randint(1, len(set_cells)))
+            )
             for cell in cells_to_connect:
                 verticals.append(cell)
                 next_cell = next_state.cells[cell.x]
@@ -100,22 +103,7 @@ class MazeEller(Maze):
 
         return next_state.populate(), state.cells
 
-    @staticmethod
-    def _row_to_str(cells: List[Cell]):
-        """Генерация строки для визуализации лабиринта."""
-        s = "\r|"
-        for i, cell in enumerate(cells):
-            if cell.walls['bottom']:
-                s += "_"
-            else:
-                s += " "
-            if cell.walls['right']:
-                s += "|"
-            else:
-                s += " "
-        return s
-
-    def generate(self):
+    def generate(self) -> None:
         """Генерация лабиринта с помощью алгоритма Эллера."""
         state = State(self.cols).populate()
 
@@ -125,20 +113,3 @@ class MazeEller(Maze):
                 finish = True
             state, cells = self.step(state, finish=finish)
             self.field[row] = cells
-
-    def _print_maze(self):
-        print(" " + "_" * (self.cols * 2 - 1))
-        for row in self.field:
-            print(self._row_to_str(row))
-
-
-if __name__ == "__main__":
-    width = 10
-    height = 15
-
-    maze = MazeEller(height, width)
-    maze.generate()
-
-    maze._print_maze()
-
-    print(f"Width: {width}, Height: {height}")

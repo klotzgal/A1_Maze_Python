@@ -1,13 +1,14 @@
-from typing import Optional, Dict
 import copy
 
 
 class Cell:
-    def __init__(self, x: int, y: int, walls: Optional[Dict[str, bool]] = None, set_id: int = 0) -> None:
+    def __init__(
+        self, x: int, y: int, walls: dict[str, bool] | None = None, set_id: int = 0
+    ) -> None:
         self.x: int = x
         self.y: int = y
         if walls is None:
-            self.walls: Dict[str, bool] = {
+            self.walls: dict[str, bool] = {
                 'top': False,
                 'left': False,
                 'right': False,
@@ -31,19 +32,5 @@ class Maze:
         self.rows: int = rows
         self.cols: int = cols
         self.field: list[list[Cell]] = [
-            [Cell(row, col) for row in range(rows)] for col in range(cols)
+            [Cell(col, row) for col in range(cols)] for row in range(rows)
         ]
-
-    def print(self):
-        print(self.rows, "rows, x")
-        print(self.cols, "cols, y")
-        for col in range(self.cols):
-            for row in range(self.rows):
-                print(self.field[col][row], end=" ")
-            print()
-        print(self.field)
-
-
-if __name__ == "__main__":
-    m = Maze(rows=2, cols=5)
-    m.print()

@@ -18,26 +18,26 @@ class Loader:
         except Exception as err:
             raise BaseMazeException(f'Incorrect file [{file}]: {err}') from err
         # Заполнение правых и левых стенок из 1 матрицы
-        for col in range(cols):
-            i = col + 1
-            for j in range(rows):
-                if maze_data[i][j] == 1:
-                    self.maze.field[col][j].walls['right'] = True
-                    if j < rows - 1:
-                        self.maze.field[col][j + 1].walls['left'] = True
-        # Заполнение нижних и верхних стенок из 2 матрицы
-        for col in range(cols):
-            i = col + cols + 2
-            for j in range(rows):
-                if maze_data[i][j] == 1:
-                    self.maze.field[col][j].walls['bottom'] = True
+        for row in range(rows):
+            for col in range(cols):
+                i = row + 1
+                if maze_data[i][col] == 1:
+                    self.maze.field[row][col].walls['right'] = True
                     if col < cols - 1:
-                        self.maze.field[col + 1][j].walls['top'] = True
+                        self.maze.field[row][col + 1].walls['left'] = True
+        # Заполнение нижних и верхних стенок из 2 матрицы
+        for row in range(rows):
+            for col in range(cols):
+                i = row + rows + 2
+                if maze_data[i][col] == 1:
+                    self.maze.field[row][col].walls['bottom'] = True
+                    if row < rows - 1:
+                        self.maze.field[row + 1][col].walls['top'] = True
         # Заполнение верхней и левой стенки лабиринта
         for row in range(rows):
-            self.maze.field[0][row].walls['top'] = True
+            self.maze.field[row][0].walls['left'] = True
         for col in range(cols):
-            self.maze.field[col][0].walls['left'] = True
+            self.maze.field[0][col].walls['top'] = True
 
         if not is_perfect_maze(bfs(self.maze, (0, 0))):
             raise BaseMazeException('Invalid maze')
@@ -58,13 +58,3 @@ class Loader:
                         ' '.join(list(map(str, [int(i.walls['bottom']) for i in row])))
                         + '\n'
                     )
-
-
-if __name__ == '__main__':
-    loader = Loader()
-    m = loader.download('files/1.txt')
-    m.print('right')
-    m.print('left')
-    m.print('bottom')
-    m.print('top')
-    loader.upload('files/maze.txt', m)
