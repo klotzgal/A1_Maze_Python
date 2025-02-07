@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QFileDialog, QWidget
 
 from modules.algorithm import bfs, get_path
 from modules.exception import BaseMazeException
+from modules.generation import MazeEller
 from modules.load import Loader
 from modules.maze import Cell, Maze
 
@@ -41,13 +42,14 @@ class MazeWidget(QWidget):
         self._clear_data()
         try:
             self.maze = Loader().download(file)
-            self.STEP_X = int(500 / self.maze.rows)
-            self.STEP_Y = int(500 / self.maze.cols)
+            self.STEP_X = int(500 / self.maze.cols)
+            self.STEP_Y = int(500 / self.maze.rows)
         except Exception as err:
             self.maze, self.STEP_X, self.STEP_Y = None, None, None
             self.exception = err
             logging.error(
-                f'In _upload_button_pressed() raised exception [{err}]', exc_info=err
+                f'In _download_button_pressed() raised exception [{err.__class__.__name__}]',
+                exc_info=err,
             )
         self.repaint()
 
@@ -58,6 +60,17 @@ class MazeWidget(QWidget):
             file = dialog.selectedFiles()[0]
             logging.info(f'Upload in file [{file}]')
             Loader().upload(file, self.maze)
+
+    def _generate_button_pressed(self):
+        self._clear_data()
+        self.maze = MazeEller(
+            int(self.main_window.ui.width.text()),
+            int(self.main_window.ui.height.text()),
+        )
+        self.STEP_X = int(500 / self.maze.cols)
+        self.STEP_Y = int(500 / self.maze.rows)
+        self.maze.generate()
+        self.repaint()
 
     def _find_path(self) -> None:
         try:
@@ -75,19 +88,19 @@ class MazeWidget(QWidget):
     def paintEvent(self, event: QPaintEvent) -> None:
         qp: QPainter = QPainter()
         qp.begin(self)
-        if self.maze and self.STEP_X and self.STEP_Y:
-            self._draw_maze(qp)
-            if self.path:
-                self._draw_path(qp)
-            if self.start:
-                qp.setPen(QPen(Qt.green, 6, Qt.SolidLine))
-                qp.drawPoint(
-                    self.start[0] * self.STEP_X + self.STEP_X // 2,
-                    self.start[1] * self.STEP_Y + self.STEP_Y // 2,
-                )
-        # elif self.exception :
-        #     self._draw_exception(event, qp)
-        qp.end()
+        try:
+            if self.maze and self.STEP_X and self.STEP_Y:
+                self._draw_maze(qp)
+                if self.path:
+                    self._draw_path(qp)
+                if self.start:
+                    qp.setPen(QPen(Qt.green, 6, Qt.SolidLine))
+                    qp.drawPoint(
+                        self.start[0] * self.STEP_X + self.STEP_X // 2,
+                        self.start[1] * self.STEP_Y + self.STEP_Y // 2,
+                    )
+        finally:
+            qp.end()
         return super().paintEvent(event)
 
     def mousePressEvent(self, event) -> None:
@@ -114,8 +127,8 @@ class MazeWidget(QWidget):
         pen: QPen = QPen(Qt.red, 2, Qt.SolidLine)
 
         qp.setPen(pen)
-        for y in range(self.maze.cols):
-            for x in range(self.maze.rows):
+        for x in range(self.maze.cols):
+            for y in range(self.maze.rows):
                 cell: Cell = self.maze.field[y][x]
                 if cell.walls['top']:
                     qp.drawLine(

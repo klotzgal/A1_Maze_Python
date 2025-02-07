@@ -16,9 +16,9 @@ def bfs(maze: Maze, s: tuple[int, int]) -> list[list[tuple[int, int]]]:
     """
 
     INF: int = 10**9
-    dist: list[list[int]] = [[INF] * maze.rows for _ in range(maze.cols)]
+    dist: list[list[int]] = [[INF] * maze.cols for _ in range(maze.rows)]
     frm: list[list[tuple[int, int]]] = [
-        [(-1, -1)] * maze.rows for _ in range(maze.cols)
+        [(-1, -1)] * maze.cols for _ in range(maze.rows)
     ]
     q: deque[Cell] = deque()
     dist[s[1]][s[0]] = 0
